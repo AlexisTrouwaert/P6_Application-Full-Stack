@@ -1,7 +1,7 @@
-package com.openclassrooms.mddapi.Service;
+package com.mddapi.service;
 
-import com.openclassrooms.mddapi.Models.Users;
-import com.openclassrooms.mddapi.Repository.UserRepository;
+import com.mddapi.model.User;
+import com.mddapi.repository.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,13 +24,13 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<Users> userOpt = userRepository.findByMail(email);
+        Optional<User> userOpt = userRepository.findByMail(email);
 
         if(userOpt.isEmpty()) {
             throw new UsernameNotFoundException("User not found");
         }
 
-        Users user = userOpt.get();
+        User user = userOpt.get();
 
         return new org.springframework.security.core.userdetails.User(
                 user.getMail(),

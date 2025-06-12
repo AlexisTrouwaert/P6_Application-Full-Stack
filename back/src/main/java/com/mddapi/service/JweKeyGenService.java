@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.Service;
+package com.mddapi.service;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +8,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 
 @Configuration
-public class JweKeyGen {
+public class JweKeyGenService {
 
     @Bean
     public static SecretKey generateAESKey() throws Exception {
@@ -19,5 +19,4 @@ public class JweKeyGen {
         }
         return new SecretKeySpec(keyBytes, "AES");
     }
-
 }

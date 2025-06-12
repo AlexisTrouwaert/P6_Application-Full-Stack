@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.Service;
+package com.mddapi.service;
 
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.DirectDecrypter;
@@ -7,26 +7,22 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
-import java.security.SecureRandom;
 import java.text.ParseException;
 import java.time.Instant;
-import java.util.Base64;
 import java.util.Date;
 import java.util.Map;
-
-import net.minidev.json.JSONObject;
 
 @Service
 public class JweService {
 
     private final SecretKey secretKey;
-    private final long EXPIRATION_TIME_SECONDS = 3600;
 
     public JweService(SecretKey secretKey) {
         this.secretKey = secretKey;
     }
 
     public String createJWE(String email) throws JOSEException {
+        long EXPIRATION_TIME_SECONDS = 3600;
         Instant expirationInstant = Instant.now().plusSeconds(EXPIRATION_TIME_SECONDS);
         Date expirationDate = Date.from(expirationInstant);
 
@@ -68,4 +64,5 @@ public class JweService {
 
         return email;
     }
+
 }

@@ -1,7 +1,6 @@
-package com.openclassrooms.mddapi.Security;
+package com.mddapi.security;
 
-import com.openclassrooms.mddapi.Service.CustomUserDetailService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.mddapi.service.CustomUserDetailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,11 +22,11 @@ import java.util.List;
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
-    private final CustomUserDetailService userDetailsService;
+    private final CustomUserDetailService customUserDetailService;
     private final JweAuthenticationFilter jweAuthenticationFilter;
 
-    public SpringSecurityConfig(CustomUserDetailService userDetailsService, JweAuthenticationFilter jweAuthenticationFilter) {
-        this.userDetailsService = userDetailsService;
+    public SpringSecurityConfig(CustomUserDetailService customUserDetailService, JweAuthenticationFilter jweAuthenticationFilter) {
+        this.customUserDetailService = customUserDetailService;
         this.jweAuthenticationFilter = jweAuthenticationFilter;
     }
 
@@ -70,7 +69,7 @@ public class SpringSecurityConfig {
                                 ).permitAll()
                                 .anyRequest().authenticated()
                 )
-                .userDetailsService(userDetailsService)
+                .userDetailsService(customUserDetailService)
                 .addFilterBefore(jweAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

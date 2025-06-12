@@ -1,8 +1,12 @@
-package com.openclassrooms.mddapi.Security;
+package com.mddapi.security;
 
-import com.openclassrooms.mddapi.Service.CustomUserDetailService;
-import com.openclassrooms.mddapi.Service.JweService;
-import lombok.NonNull;
+import com.mddapi.service.CustomUserDetailService;
+import com.mddapi.service.JweService;
+import io.micrometer.common.lang.NonNull;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,10 +17,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
@@ -25,14 +25,14 @@ public class JweAuthenticationFilter extends OncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(JweAuthenticationFilter.class);
 
     private final JweService jweService;
-    private final CustomUserDetailService customUserDetailsService;
+    private final CustomUserDetailService customUserDetailService;
 
     public JweAuthenticationFilter(
             JweService jweService,
-            CustomUserDetailService customUserDetailsService
+            CustomUserDetailService customUserDetailService
     ) {
         this.jweService = jweService;
-        this.customUserDetailsService = customUserDetailsService;
+        this.customUserDetailService = customUserDetailService;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class JweAuthenticationFilter extends OncePerRequestFilter {
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             try {
-                UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
+                UserDetails userDetails = customUserDetailService.loadUserByUsername(email);
 
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
