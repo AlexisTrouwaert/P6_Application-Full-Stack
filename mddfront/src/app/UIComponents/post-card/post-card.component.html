@@ -1,0 +1,30 @@
+<div class="card-wrapper" *ngIf="post" else noPost>
+    <div class="top">
+    </div>
+    <div class="content">
+        <div class="header">
+            <h3>{{post.title}}</h3>
+            <div class="info">
+                <p>Le : {{post.createdAt | date: 'yyyy/MM/dd'}}</p>
+                <p>Par : {{post.user.username}}</p>
+                <p *ngIf="!truncate">Théme : {{post.topic.topic}}</p>
+            </div>
+        </div>
+        <div class="content">
+            <p *ngIf="truncate">{{post.content | truncate: 250}}</p>
+            <p *ngIf="!truncate">{{post.content}}</p>
+        </div>
+        <div class="plus" *ngIf="truncate">
+            <p>Voir plus...</p>
+        </div>
+    </div>
+</div>
+
+<template #noPost>
+    <div class="all">
+        <div class="top">
+        </div>
+        <div class="content">
+            <p>Aucun posts à afficher</p>
+        </div>
+    </div>

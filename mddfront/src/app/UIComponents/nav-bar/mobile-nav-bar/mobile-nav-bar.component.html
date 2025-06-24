@@ -1,0 +1,24 @@
+<div class="all" (click)="onBackgroundClick()">
+    <div class="bar" (click)="onNavigationClick($event)">
+        <div class="links">
+            <app-buttons 
+                (click)="logOut()" 
+                label="Se déconnecter" 
+                typeButton="secondary">
+            </app-buttons>
+            <app-buttons 
+                (click)="redirecttoArticles()" 
+                label="Articles" 
+                typeButton="secondary">
+            </app-buttons>
+            <app-buttons 
+                (click)="redirectToTopic()" 
+                label="Thèmes" 
+                typeButton="secondary">
+            </app-buttons>
+        </div>
+        <div class="profil">
+            <img src="assets/icons/profil.svg" alt="Profile" (click)="redirectToProfile()">
+        </div>
+    </div>
+</div>

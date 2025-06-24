@@ -1,0 +1,32 @@
+<div class="all">
+    <div class="left" (click)="redirectToFeed()">
+        <img src="assets/icons/logo.svg" alt="logo">
+    </div>
+    <div class="right" *ngIf="isLargeScreen">
+        <div class="links">
+            <app-buttons
+                (click)="logOut()"
+                label="Se déconnecter"
+                typeButton="secondary"
+            ></app-buttons>
+            <app-buttons
+                (click)="redirecttoArticles()"
+                label="Articles"
+                typeButton="secondary"
+            ></app-buttons>
+            <app-buttons
+                (click)="redirectToTopic()"
+                label="Thèmes"
+                typeButton="secondary"
+            ></app-buttons>
+        </div>
+        <div class="profil" (click)="redirectToProfile()">
+            <img src="assets/icons/profil.svg" alt="Profile">
+        </div>
+    </div>
+    <div class="right" *ngIf="!isLargeScreen" (click)="openNavBarMobile = !openNavBarMobile">
+        <img src="assets/icons/menu.svg" alt="Menu">
+    </div>
+</div>
+
+<app-mobile-nav-bar *ngIf="!isLargeScreen && openNavBarMobile" (closeNavBar)="openNavBarMobile = false"></app-mobile-nav-bar>

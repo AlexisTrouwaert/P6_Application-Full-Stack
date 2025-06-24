@@ -1,0 +1,21 @@
+<div class="all">
+    <div class="top">
+        <app-buttons
+            label="Créer un article"
+            typeButton="tertiary"
+            (click)="shownewPost = !shownewPost"
+        ></app-buttons>
+        <select name="" id="">
+            <option value="newest">Les plus récents</option>
+            <option value="oldest">Les plus anciens</option>
+        </select>
+    </div>
+    <div class="content">
+        <app-post-card *ngFor="let post of posts" (click)="redirectToDetails(post.id)"
+            [post]="post"
+        ></app-post-card>
+        <div class="sentinel" #scrollSentinel></div>
+    </div>
+</div>
+
+<app-write-new-post *ngIf="shownewPost" (closeWritePost)="shownewPost = false" [topics]="topics"></app-write-new-post>

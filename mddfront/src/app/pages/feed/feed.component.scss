@@ -1,0 +1,39 @@
+.all{
+    padding: 6rem 1rem 1rem 1rem;
+    box-sizing: border-box;
+}
+
+.sentinel{
+    width: 100vw;
+    height: 1px;
+}
+
+.top{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+
+    & select {
+        background: none;
+        border-style: none;
+        border: none;
+    }
+}
+
+.content{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+
+    & app-post-card {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    @media (min-width: 769px) {
+        app-post-card {
+            flex: 0 0 calc(50% - 0.75rem);
+        }
+    }
+}

@@ -1,0 +1,19 @@
+<div class="all" (click)="onBackgroundClick()">
+    <div class="modal" (click)="onNavigationClick($event)">
+        <div class="header">
+            <h3>Ecrivez un nouvel article</h3>
+        </div>
+        <form [formGroup]="createForm" (ngSubmit)="submit()">
+            <input type="text" name="" id="" placeholder="Titre de l'article" required formControlName="title">
+            <select name="" id="" formControlName="topicId">
+                <option *ngFor="let topic of topics" [value]="topic.id">{{topic.topic}}</option>
+            </select>
+            <textarea name="" id="" cols="30" rows="10" placeholder="Contenu de l'article" required formControlName="content"></textarea>
+            <app-buttons
+                label="Publier"
+                type="submit"
+                typeButton="primary"
+            ></app-buttons>
+        </form>
+    </div>
+</div>

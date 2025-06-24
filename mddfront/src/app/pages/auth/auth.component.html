@@ -1,0 +1,17 @@
+<div class="all">
+    <div class="top" *ngIf="login || register">
+        <app-buttons label="Retour" typeButton="tertiary" type="back" (click)="register = false; login = false">
+        </app-buttons>
+    </div>
+    <div class="header">
+        <img src="assets/icons/logo.svg" alt="">
+    </div>
+
+    <div class="buttons" *ngIf="!login && !register">
+        <app-buttons label="Se connceter" (click)="login = true"></app-buttons>
+        <app-buttons label="S'inscrire" (click)="register = true"></app-buttons>
+    </div>
+    <app-login *ngIf="login"></app-login>
+    <app-register *ngIf="register"></app-register>
+</div>
+

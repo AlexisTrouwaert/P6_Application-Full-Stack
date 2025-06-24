@@ -1,0 +1,13 @@
+<div class="register">
+    <h3>Inscription</h3>
+    <form [formGroup]="registerForm" (ngSubmit)="submit()">
+        <input type="text" name="username" id="username" placeholder="Nom d'utilisateur" formControlName="username">
+        <input type="email" name="email" id="email" placeholder="Email" formControlName="mail">
+        <input type="password" name="password" id="password" placeholder="Mot de passe" formControlName="password">
+        <app-buttons
+            label="S'inscrire"
+            type="submit"
+            >
+        </app-buttons>
+    </form>
+</div>

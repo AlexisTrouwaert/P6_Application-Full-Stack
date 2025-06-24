@@ -1,0 +1,29 @@
+<div class="topic-wrapper">
+    <div class="topic-header">
+        <h3>{{ topic.topic }}</h3>
+    </div>
+
+    <div class="topic-content">
+        <p>{{ topic.description }}</p>
+        <p>Nombre de posts : {{ topic.articleCount }}</p>
+    </div>
+
+    <div class="topic-footer">
+        <app-buttons
+            label="Voir les posts"
+            type="button"
+            typeButton="secondary"
+        ></app-buttons>
+        <app-buttons
+            label="S'abonner"
+            type="button"
+            typeButton="primary"
+        ></app-buttons>
+        <app-buttons
+            label="Se desabonner"
+            type="button"
+            typeButton="primary"
+        ></app-buttons>
+    </div>
+
+</div>

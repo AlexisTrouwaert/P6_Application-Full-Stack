@@ -1,0 +1,8 @@
+<button
+  [type]="type"
+  [disabled]="disabled"
+  [ngClass]="['btn', typeButton]"
+>
+    <img class="arrow" *ngIf="type === 'back'" src="assets/icons/arrow.svg" alt="Retour">
+    {{ label }}
+</button>

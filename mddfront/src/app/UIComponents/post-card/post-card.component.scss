@@ -1,0 +1,32 @@
+.card-wrapper{
+    background-color: #dddddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+h3, p{
+    margin: 0;
+}
+
+.info{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.content{
+    margin-top: 0.5rem;
+}
+
+.plus{
+    margin-top: 0.5rem;
+}
+
+h3{
+    font-size: 1rem;
+    color: #333;
+}

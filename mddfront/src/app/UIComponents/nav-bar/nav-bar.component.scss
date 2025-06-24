@@ -1,0 +1,36 @@
+.all{
+    width: 100vw;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ccc;
+}
+
+.left{
+    margin-left: 1rem;
+    & img {
+        width: 6rem;
+        cursor: pointer;
+    }
+}
+
+.right{
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    & img{
+        width: 2rem;
+        height: 2rem;
+        cursor: pointer;
+    }
+}
+
+.links{
+    gap: 1rem;
+}
