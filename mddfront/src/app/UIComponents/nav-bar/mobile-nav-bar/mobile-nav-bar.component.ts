@@ -32,6 +32,7 @@ export class MobileNavBarComponent {
 
   redirectToProfile(){
     this.router.navigate(['/profile']);
+    this.closeNavBar.emit();
   }
 
   logOut() {
@@ -50,9 +51,11 @@ export class MobileNavBarComponent {
 
   redirecttoArticles(){
     this.router.navigate(['/articles']);
+    this.closeNavBar.emit();
   }
 
   redirectToTopic(){
-    this.router.navigate(['/topic']);
+    this.router.navigate(['/topics']);
+    this.closeNavBar.emit();
   }
 }

@@ -24,6 +24,25 @@ h3, p{
 
 .plus{
     margin-top: 0.5rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & img {
+        width: 1.5rem;
+        height: 1.5rem;
+        cursor: pointer;
+    }
+}
+
+.delete{
+    margin-top: 1rem;
+    & img {
+        width: 1.5rem;
+        height: 1.5rem;
+        cursor: pointer;
+    }
 }
 
 h3{

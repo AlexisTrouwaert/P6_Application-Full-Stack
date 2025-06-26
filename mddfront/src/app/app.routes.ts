@@ -9,7 +9,8 @@ export const routes: Routes = [
         children: [
             { path: 'feed', loadComponent: () => import('./pages/feed/feed.component').then(m => m.FeedComponent) },
             { path: 'details/:id', loadComponent: () => import('./pages/post-detail/post-detail.component').then(m => m.PostDetailComponent) },
-            {path: 'topics', loadComponent: () => import('./pages/topic/topic.component').then(m => m.TopicComponent) },
+            { path: 'topics', loadComponent: () => import('./pages/topic/topic.component').then(m => m.TopicComponent) },
+            { path: 'profile', loadComponent: () => import('./pages/profil-page/profil-page.component').then(m => m.ProfilPageComponent) },
         ]
     },
     { path: 'auth', loadComponent: () => import('./pages/auth/auth.component').then(m => m.AuthComponent) },

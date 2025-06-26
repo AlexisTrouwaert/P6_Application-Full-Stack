@@ -2,6 +2,7 @@ package com.mddapi.controller;
 
 import com.mddapi.dto.request.AuthenticationRequest;
 import com.mddapi.dto.request.RegistrationRequest;
+import com.mddapi.dto.response.MeResponseDto;
 import com.mddapi.model.User;
 import com.mddapi.repository.UserRepository;
 import com.mddapi.service.JweService;
@@ -17,11 +18,9 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.core.Authentication;
 
 import java.time.Duration;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -65,8 +64,13 @@ public class AuthController {
                     .maxAge(Duration.ofHours(1))
                     .build();
 
+            MeResponseDto responseDto = new MeResponseDto();
+            responseDto.setUsername(user.getUsername());
+            responseDto.setId(user.getId());
+            responseDto.setEmail(user.getMail());
+
             response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
         } catch (RuntimeException e) {
             logger.error("User registration failed for user {}. Error: {}", request.getUsername(), e.getMessage(), e);
             return ResponseEntity
@@ -86,10 +90,10 @@ public class AuthController {
 
             String token = null;
             try {
-                token = jweService.createJWE(request.getMail());
+                token = jweService.createJWE(user.getMail());
                 logger.info("JWE token successfully created for user: {}", user.getUsername());
             } catch (Exception e) {
-                logger.error("Failed to create JWE token for user {}. Error: {}", request.getMail(), e.getMessage(), e);
+                logger.error("Failed to create JWE token for user {}. Error: {}", user.getMail(), e.getMessage(), e);
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body("{\"message\": \"An error occurred while generating authentication token.\"}");
             }
@@ -102,10 +106,14 @@ public class AuthController {
                     .maxAge(Duration.ofHours(1))
                     .build();
 
+            MeResponseDto responseDto = new MeResponseDto();
+            responseDto.setUsername(user.getUsername());
+            responseDto.setId(user.getId());
+            responseDto.setEmail(user.getMail());
+
             response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-            return ResponseEntity.ok().body(user);
+            return ResponseEntity.ok().body(responseDto);
         } catch (RuntimeException e) {
-            logger.error("User login failed for email {}. Error: {}", request.getMail(), e.getMessage(), e);
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR) // 500 Internal Server Error
                     .body("{\"message\": \"An unexpected error occurred during login.\"}");
@@ -113,10 +121,14 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> me(
+    public ResponseEntity<MeResponseDto> me(
             @AuthenticationPrincipal User authenticatedUser
     ) {
-        return ResponseEntity.ok().body(authenticatedUser);
+        MeResponseDto meResponseDto = new MeResponseDto();
+        meResponseDto.setUsername(authenticatedUser.getUsername());
+        meResponseDto.setId(authenticatedUser.getId());
+        meResponseDto.setEmail(authenticatedUser.getMail());
+        return ResponseEntity.ok(meResponseDto);
     }
 
     @GetMapping("/logout")
@@ -126,6 +138,7 @@ public class AuthController {
         cookie.setHttpOnly(false);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         return ResponseEntity.ok().build();
     }
 }

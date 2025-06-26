@@ -63,6 +63,6 @@ export class NavBarComponent implements OnInit {
   }
 
   redirectToTopic(){
-    this.router.navigate(['/topic']);
+    this.router.navigate(['/topics']);
   }
 }

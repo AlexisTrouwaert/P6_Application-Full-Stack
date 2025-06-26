@@ -1,7 +1,7 @@
 <div class="register">
     <h3>Connexion</h3>
     <form [formGroup]="registerForm" (ngSubmit)="submit()">
-        <input type="email" name="email" id="email" placeholder="Email" formControlName="mail">
+        <input type="email" name="email" id="email" placeholder="Email" formControlName="identifier">
         <input type="password" name="password" id="password" placeholder="Mot de passe" formControlName="password">
         <app-buttons
         label="Se connecter"

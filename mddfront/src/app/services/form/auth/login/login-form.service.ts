@@ -12,7 +12,7 @@ export class LoginFormService {
 
   getLoginForm(): FormGroup {
     return this.fb.group({
-      mail: new FormControl('', [Validators.required, Validators.email]),
+      identifier: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(4)])
     });
   }

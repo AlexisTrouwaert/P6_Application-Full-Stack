@@ -8,6 +8,7 @@ import { PostCardComponent } from '../../UIComponents/post-card/post-card.compon
 import { Subject, takeUntil } from 'rxjs';
 import { WriteNewPostComponent } from './write-new-post/write-new-post.component';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-feed',
@@ -16,7 +17,8 @@ import { Router } from '@angular/router';
     CommonModule,
     ButtonsComponent,
     PostCardComponent,
-    WriteNewPostComponent
+    WriteNewPostComponent,
+    FormsModule
   ],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss'
@@ -26,13 +28,13 @@ export class FeedComponent implements OnInit {
   constructor(
     private getAllPostsService: GetAllPostsService,
     private getAllTopicsService: GetAllTopicService,
-    private router : Router
+    private router: Router
   ) { }
 
   @ViewChild('scrollSentinel', { static: false }) scrollSentinel!: ElementRef;
 
-   private destroy$ = new Subject<void>();
-   private scrollObserver!: IntersectionObserver;
+  private destroy$ = new Subject<void>();
+  private scrollObserver!: IntersectionObserver;
 
 
   page = 0;
@@ -41,6 +43,8 @@ export class FeedComponent implements OnInit {
   loading = false;
   posts: Posts[] = [];
   topics: any[] = [];
+  myId!: number;
+  sortOrder: string = 'newest';
 
   shownewPost: boolean = false;
 
@@ -49,6 +53,8 @@ export class FeedComponent implements OnInit {
     this.page = 0;
     this.loading = false;
     this.loadTopics();
+    const currentUser = localStorage.getItem('currentUser');
+    this.myId = currentUser ? JSON.parse(currentUser).id : undefined;
   }
 
   ngAfterViewInit() {
@@ -81,7 +87,7 @@ export class FeedComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.getAllPostsService.getAllPosts(this.page, this.size)
+    this.getAllPostsService.getAllPosts(this.page, this.size, this.sortOrder)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response: any) => {
@@ -99,6 +105,7 @@ export class FeedComponent implements OnInit {
           this.loading = false;
         }
       });
+
   }
 
   loadTopics(): void {

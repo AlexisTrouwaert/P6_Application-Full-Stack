@@ -14,8 +14,12 @@
             <p *ngIf="truncate">{{post.content | truncate: 250}}</p>
             <p *ngIf="!truncate">{{post.content}}</p>
         </div>
-        <div class="plus" *ngIf="truncate">
+        <div class="plus" *ngIf="truncate" (click)="$event.stopPropagation()">
             <p>Voir plus...</p>
+            <img *ngIf="myId === post.user.id" src="assets/icons/trash.svg" alt="supprimer" (click)="delete(post.id)">
+        </div>
+        <div class="delete" *ngIf="!truncate && myId === post.user.id" (click)="$event.stopPropagation()">
+            <img src="assets/icons/trash.svg" alt="supprimer" (click)="delete(post.id)">
         </div>
     </div>
 </div>
@@ -28,3 +32,4 @@
             <p>Aucun posts à afficher</p>
         </div>
     </div>
+</template>

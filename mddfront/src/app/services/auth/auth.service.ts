@@ -27,7 +27,24 @@ export class AuthService {
 
 
   register(data : RegisterForm): Observable<any> {
-    return this.http.post(`${this.API_URL}/register`, data, { withCredentials: true });
+    return this.http.post(`${this.API_URL}/register`, data, { withCredentials: true }).pipe(
+      tap(response => {
+        this.currentUserSubject.next(response);
+        console.log('API /login succès, utilisateur:', response);
+        try {
+          localStorage.setItem('currentUser', JSON.stringify(response));
+          console.log('Utilisateur enregistré dans localStorage.');
+        } catch (e) {
+          console.error('Erreur lors de l\'enregistrement dans localStorage:', e);
+        }
+      }),
+      catchError(error => {
+        console.warn("API /login erreur, utilisateur non authentifié:", error);
+        this.currentUserSubject.next(null);
+        return of(null);
+      }
+      )
+    );
   }
 
   login(data : LoginFormInterface): Observable<any> {
@@ -35,6 +52,12 @@ export class AuthService {
       tap(response => {
         this.currentUserSubject.next(response);
         console.log('API /login succès, utilisateur:', response);
+        try {
+          localStorage.setItem('currentUser', JSON.stringify(response));
+          console.log('Utilisateur enregistré dans localStorage.');
+        } catch (e) {
+          console.error('Erreur lors de l\'enregistrement dans localStorage:', e);
+        }
       }),
       catchError(error => {
         console.warn("API /login erreur, utilisateur non authentifié:", error);
@@ -54,6 +77,12 @@ export class AuthService {
         console.log('API /me succès, utilisateur:', user);
         this.currentUserSubject.next(user);
         this.hasLoadedMe = true;
+        try {
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          console.log('Utilisateur enregistré dans localStorage.');
+        } catch (e) {
+          console.error('Erreur lors de l\'enregistrement dans localStorage:', e);
+        }
       }),
       catchError(error => {
         console.warn("API /me erreur, utilisateur non authentifié ou session invalide:", error);

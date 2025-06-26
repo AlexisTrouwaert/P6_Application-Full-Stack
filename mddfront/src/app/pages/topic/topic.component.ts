@@ -3,6 +3,7 @@ import { TopicCardComponent } from "../../UIComponents/topic-card/topic-card.com
 import { GetAllTopicService } from '../../services/topic/get-all-topic.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Topics } from '../../models/topics';
 
 @Component({
   selector: 'app-topic',
@@ -10,24 +11,24 @@ import { CommonModule } from '@angular/common';
   imports: [
     TopicCardComponent,
     CommonModule
-],
+  ],
   templateUrl: './topic.component.html',
   styleUrl: './topic.component.scss'
 })
 export class TopicComponent implements OnInit {
 
-  topics: any[] = [];
+  topics: Topics[] = [];
 
   constructor(
-      private getAllTopicsService: GetAllTopicService,
-      private router : Router
-    ) { }
+    private getAllTopicsService: GetAllTopicService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loadTopics();
   }
 
-    loadTopics(): void {
+  loadTopics(): void {
     this.getAllTopicsService.getAllTopics().subscribe({
       next: (response: any) => {
         console.log('Topics loaded:', response);

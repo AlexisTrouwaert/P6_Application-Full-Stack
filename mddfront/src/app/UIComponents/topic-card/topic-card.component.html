@@ -4,7 +4,7 @@
     </div>
 
     <div class="topic-content">
-        <p>{{ topic.description }}</p>
+        <p>{{ topic.description | truncate: 150 }}</p>
         <p>Nombre de posts : {{ topic.articleCount }}</p>
     </div>
 
@@ -15,14 +15,18 @@
             typeButton="secondary"
         ></app-buttons>
         <app-buttons
+            *ngIf="!topic.subscribed"
             label="S'abonner"
             type="button"
             typeButton="primary"
+            (click)="sub(topic.id)"
         ></app-buttons>
         <app-buttons
+            *ngIf="topic.subscribed"
             label="Se desabonner"
             type="button"
             typeButton="primary"
+            (click)="unsub(topic.id)"
         ></app-buttons>
     </div>
 

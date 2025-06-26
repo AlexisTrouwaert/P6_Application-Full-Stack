@@ -14,7 +14,7 @@ export class GetAllPostsService {
 
   private readonly API_URL = 'http://localhost:9000/api/post';
 
-  getAllPosts(page: number, size: number) : Observable<Posts[]> {
-    return this.http.get<Posts[]>(`${this.API_URL}?page=${page}&size=${size}`, { withCredentials: true });
+  getAllPosts(page: number, size: number, sortOrder: string) : Observable<Posts[]> {
+    return this.http.get<Posts[]>(`${this.API_URL}?page=${page}&size=${size}&sortOrder=${sortOrder}`, { withCredentials: true });
   }
 }

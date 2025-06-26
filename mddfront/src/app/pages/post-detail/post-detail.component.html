@@ -4,4 +4,10 @@
         [post]="post"
         [truncate]="false"
     ></app-post-card>
+    <div class="commentSection">
+        <form [formGroup]="createCommentform" (ngSubmit)="submit()">
+            <input type="text" name="" id="" placeholder="Ajouter un commentaire" formControlName="content" required>
+            <button type="submit">Envoyer</button>
+        </form>
+    </div>
 </div>

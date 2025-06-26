@@ -49,6 +49,7 @@ export class WriteNewPostComponent {
       this.createPost.createPost(formdata).subscribe({
         next: () => {
           console.log("Article crée avec succès");
+          this.closeWritePost.emit();
         },
         error: (err) => {
           console.error("Erreur lors de la création de l'article:", err);
