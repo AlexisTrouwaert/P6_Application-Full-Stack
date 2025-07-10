@@ -13,7 +13,7 @@ export class CreatePostFormService {
   getCreatePostForm(): FormGroup {
     return this.fb.group({
       title: new FormControl('', [Validators.required, Validators.minLength(4)]),
-      content: new FormControl('', [Validators.required, Validators.minLength(10)]),
+      content: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(5000)]),
       topicId: new FormControl(0, [Validators.required]),
     })
   }

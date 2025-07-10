@@ -10,6 +10,7 @@ import com.mddapi.service.UserService;
 import com.nimbusds.jose.JOSEException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -41,7 +42,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody RegistrationRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegistrationRequest request, HttpServletResponse response) {
 
         try {
             User user = userService.register(request);
@@ -74,8 +75,8 @@ public class AuthController {
         } catch (RuntimeException e) {
             logger.error("User registration failed for user {}. Error: {}", request.getUsername(), e.getMessage(), e);
             return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("{\"message\": \"An unexpected error occurred during registration.\"}");
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("message", e.getMessage()));
         }
     }
 
@@ -115,8 +116,8 @@ public class AuthController {
             return ResponseEntity.ok().body(responseDto);
         } catch (RuntimeException e) {
             return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR) // 500 Internal Server Error
-                    .body("{\"message\": \"An unexpected error occurred during login.\"}");
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("message", e.getMessage()));
         }
     }
 
@@ -133,11 +134,13 @@ public class AuthController {
 
     @GetMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletResponse response) {
-        Cookie cookie = new Cookie("access_token", null);
-        cookie.setPath("/");
-        cookie.setHttpOnly(false);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
+        ResponseCookie cookie = ResponseCookie.from("access_token", null)
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .sameSite("Lax")
+                .maxAge(Duration.ofHours(0))
+                .build();
         response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         return ResponseEntity.ok().build();
     }

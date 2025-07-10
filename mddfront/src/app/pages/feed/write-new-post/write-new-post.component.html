@@ -9,6 +9,9 @@
                 <option *ngFor="let topic of topics" [value]="topic.id">{{topic.topic}}</option>
             </select>
             <textarea name="" id="" cols="30" rows="10" placeholder="Contenu de l'article" required formControlName="content"></textarea>
+            <div *ngIf="showError">
+                <p class="error">{{errorMessage}}</p>
+            </div>
             <app-buttons
                 label="Publier"
                 type="submit"

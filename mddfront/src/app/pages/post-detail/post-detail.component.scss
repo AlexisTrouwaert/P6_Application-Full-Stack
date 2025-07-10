@@ -1,3 +1,71 @@
 .all{
     padding: 6rem 1rem 1rem 1rem;
 }
+
+input{
+    outline: none;
+    background-color: #dddddd;
+    color: #1a1a1a;
+    border: none;
+    padding: 0.6em 1.2em;
+    font-size: 1rem;
+     border-radius: 4px;
+    letter-spacing: 0.1em;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    width: 100%;
+}
+
+form{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    gap: 1rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.comment-display{
+    margin-top: 1rem;
+    background-color: #dddddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.content{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.delete{
+    & img {
+        width: 1.5rem;
+        height: 1.5rem;
+        cursor: pointer;
+    }
+}
+
+.error{
+    color: #D65A4B;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    font-weight: bold;
+    animation: shake-text 0.5s ease-in-out;
+}
+
+@keyframes shake-text {
+  0% { transform: translateX(0); }
+  10% { transform: translateX(-5px); }
+  20% { transform: translateX(5px); }
+  30% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  50% { transform: translateX(-2px); }
+  60% { transform: translateX(2px); }
+  70% { transform: translateX(-1px); }
+  80% { transform: translateX(1px); }
+  100% { transform: translateX(0); }
+}

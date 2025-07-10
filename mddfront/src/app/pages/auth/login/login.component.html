@@ -3,13 +3,13 @@
     <form [formGroup]="registerForm" (ngSubmit)="submit()">
         <input type="email" name="email" id="email" placeholder="Email" formControlName="identifier">
         <input type="password" name="password" id="password" placeholder="Mot de passe" formControlName="password">
+        <div *ngIf="showError">
+            <p class="error">{{errorMessage}}</p>
+        </div>
         <app-buttons
         label="Se connecter"
         type="submit"
         >
-    </app-buttons>
+        </app-buttons>
 </form>
-</div>
-<div *ngIf="showError">
-    <p class="error">{{errorMessage}}</p>
 </div>

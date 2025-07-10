@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,8 @@ public class Comment {
     private Long id;
 
     @Column(nullable = false)
+    @Size(min = 8, message = "Le commentaire doit contenir au moins 8 caractères")
+    @Size(max = 50, message = "Le commentaire ne peut contenir plus de 50 caractères")
     private String comment;
 
     @ManyToOne(optional = false)
@@ -40,7 +43,7 @@ public class Comment {
     @CreationTimestamp
     @Column(name = "created_at")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at")

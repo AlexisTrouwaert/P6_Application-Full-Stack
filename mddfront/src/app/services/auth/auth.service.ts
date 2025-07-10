@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, firstValueFrom, Observable, of, ReplaySubject, tap } from 'rxjs';
+import { BehaviorSubject, catchError, firstValueFrom, Observable, of, ReplaySubject, tap, throwError } from 'rxjs';
 import { RegisterForm } from '../../models/form/auth/register/register-form';
 import { LoginFormInterface } from '../../models/form/auth/login/login-form-interface';
 
@@ -41,7 +41,7 @@ export class AuthService {
       catchError(error => {
         console.warn("API /login erreur, utilisateur non authentifié:", error);
         this.currentUserSubject.next(null);
-        return of(null);
+        return throwError(() => error);
       }
       )
     );
@@ -62,7 +62,7 @@ export class AuthService {
       catchError(error => {
         console.warn("API /login erreur, utilisateur non authentifié:", error);
         this.currentUserSubject.next(null);
-        return of(null);
+        return throwError(() => error);
       }
       )
     );
@@ -120,7 +120,7 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
-    return this.http.post(`${this.API_URL}/logout`, {}, { withCredentials: true }).pipe(
+    return this.http.get(`${this.API_URL}/logout`, { withCredentials: true }).pipe(
       tap(() => {
         console.log('API /logout succès, utilisateur déconnecté');
         this.currentUserSubject.next(null);
@@ -130,5 +130,14 @@ export class AuthService {
         return of(null);
       })
     );
+  }
+
+  updateCurrentUser(user: any): void {
+    this.currentUserSubject.next(user);
+    try {
+      localStorage.setItem('currentUser', JSON.stringify(user));
+    } catch (e) {
+      console.error('Erreur lors de la mise à jour de l\'utilisateur dans localStorage:', e);
+    }
   }
 }

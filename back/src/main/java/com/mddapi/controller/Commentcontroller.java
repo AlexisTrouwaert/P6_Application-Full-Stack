@@ -3,6 +3,7 @@ package com.mddapi.controller;
 import com.mddapi.dto.request.CommentRequestDto;
 import com.mddapi.dto.request.SendPostRequest;
 import com.mddapi.dto.response.CommentResponse;
+import com.mddapi.mapper.CommentMapper;
 import com.mddapi.model.Comment;
 import com.mddapi.model.User;
 import com.mddapi.repository.CommentRepository;
@@ -23,15 +24,18 @@ public class Commentcontroller {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
     private final CommentService commentService;
+    private final CommentMapper commentMapper;
 
     public Commentcontroller(
             CommentRepository commentRepository,
             PostRepository postRepository,
-            CommentService commentService
+            CommentService commentService,
+            CommentMapper commentMapper
     ) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
         this.commentService = commentService;
+        this.commentMapper = commentMapper;
     }
 
     @PostMapping()
@@ -64,14 +68,18 @@ public class Commentcontroller {
         }
     }
 
-    @GetMapping("/{id]")
+    @GetMapping("/{id}")
     public ResponseEntity<List<CommentResponse>> getComment(
-            @PathVariable Long id,
+            @PathVariable("id") Long postId,
             @AuthenticationPrincipal User currentUser
     ) {
+        if(currentUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        List<Comment> comments = commentRepository.findAllByPostIdOrderByCreatedAtDesc(postId);
 
-        List<Comment> comments = commentRepository.findAllByPostId(id);
+        List<CommentResponse> commentResponses = commentMapper.toDtoList(comments);
 
-
+        return ResponseEntity.ok(commentResponses);
     }
 }

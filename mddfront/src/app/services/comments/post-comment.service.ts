@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,5 +15,13 @@ export class PostCommentService {
 
   sendComment(comment: any) {
     return this.http.post(`${this.API_URL}`, comment, { withCredentials: true });
+  }
+
+  getCommentsByPostId(postId: string): Observable<any> {
+    return this.http.get<any>(`${this.API_URL}/${postId}`, { withCredentials: true });
+  }
+
+  deleteComment(commentId: number) {
+    return this.http.delete(`${this.API_URL}/${commentId}`, { withCredentials: true });
   }
 }

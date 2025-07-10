@@ -1,9 +1,18 @@
 <div class="all">
     <div class="header">
         <h2>Profil utilisateur</h2>
-        <input type="text" name="username" placeholder="Nom d'utilisateur">
-        <input type="text" name="mail" placeholder="Email">
-        <input type="text" name="password" placeholder="Mot de passe">
+        <form [formGroup]="editForm" (ngSubmit)="submit()" class="form">
+            <input type="text" name="username" placeholder="Nom d'utilisateur" value="{{ myInfo.username }}" formControlName="username">
+            <input type="text" name="mail" placeholder="Email" value="{{ myInfo.email }}" formControlName="mail">
+            <input type="password" name="password" placeholder="Mot de passe" formControlName="password">
+            <div *ngIf="showError">
+                <p class="error">{{errorMessage}}</p>
+            </div>
+            <app-buttons
+                label="Mettre à jour"
+                type="submit"
+                ></app-buttons>
+        </form>
     </div>
     <div class="content">
         <app-topic-card *ngFor="let topic of topics"

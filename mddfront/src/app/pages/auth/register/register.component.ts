@@ -42,13 +42,29 @@ export class RegisterComponent {
         },
         error: (err) => {
           console.error("Erreur lors de l'inscription:", err);
-          this.showError = true;
-          this.errorMessage = err.error.message || "Une erreur est survenue lors de l'inscription.";
-          setTimeout(() => {
-            this.showError = false;
-          }, 3000);
+            if(err.error.message === 'password_missmatch_pattern'){
+              this.showErrorMessage(`Le mot de passe doit contenir :
+          - Au moins 8 caractères
+          - Au moins un chiffre
+          - Au moins une lettre minuscule
+          - Au moins une lettre majuscule
+          - Au moins un caractère spécial`);
+            } else {
+              this.showErrorMessage(err.error.message || "Une erreur est survenue lors de la connexion.");
+            }
         }
       });
+    } else {
+      this.showErrorMessage("Veuillez remplir tous les champs correctement.")
     }
   }
+
+  showErrorMessage(error : string): void {
+      this.errorMessage = error;
+      this.showError = true;
+      setTimeout(() => {
+        this.showError = false;
+        this.errorMessage = "";
+      }, 3000);
+    }
 }

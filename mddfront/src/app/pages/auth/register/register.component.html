@@ -3,7 +3,30 @@
     <form [formGroup]="registerForm" (ngSubmit)="submit()">
         <input type="text" name="username" id="username" placeholder="Nom d'utilisateur" formControlName="username">
         <input type="email" name="email" id="email" placeholder="Email" formControlName="mail">
+        <div *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)" class="error">
+            <div *ngIf="registerForm.get('password')?.errors?.['required']">
+            Le mot de passe ne peut pas être vide.
+            </div>
+            <div *ngIf="registerForm.get('password')?.errors?.['minlength']">
+            Le mot de passe doit contenir au moins 8 caractères.
+            </div>
+            <div *ngIf="registerForm.get('password')?.errors?.['hasDigit']">
+            Le mot de passe doit contenir au moins un chiffre.
+            </div>
+            <div *ngIf="registerForm.get('password')?.errors?.['hasLowercase']">
+            Le mot de passe doit contenir au moins une lettre minuscule.
+            </div>
+            <div *ngIf="registerForm.get('password')?.errors?.['hasUppercase']">
+            Le mot de passe doit contenir au moins une lettre majuscule.
+            </div>
+            <div *ngIf="registerForm.get('password')?.errors?.['hasSpecialCharacter']">
+            Le mot de passe doit contenir au moins un caractère spécial.
+            </div>
+        </div>
         <input type="password" name="password" id="password" placeholder="Mot de passe" formControlName="password">
+        <div *ngIf="showError">
+            <p class="error">{{errorMessage}}</p>
+        </div>
         <app-buttons
             label="S'inscrire"
             type="submit"

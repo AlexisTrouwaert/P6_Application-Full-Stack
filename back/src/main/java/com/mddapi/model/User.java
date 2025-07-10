@@ -32,12 +32,6 @@ public class User implements UserDetails {
     private String mail;
 
     @Column(name = "password", nullable = false)
-    @NotNull(message = "Le mot de passe doit contenir au moins 8 caractères")
-    @Size(min = 8, message = "Le mot de passe doit contenir au moins 8 caractères")
-    @Pattern(regexp = ".*[0-9].*", message = "Le mot de passe doit contenir au moins un chiffre")
-    @Pattern(regexp = ".*[a-z].*", message = "Le mot de passe doit contenir au moins une lettre minuscule")
-    @Pattern(regexp = ".*[A-Z].*", message = "Le mot de passe doit contenir au moins une lettre majuscule")
-    @Pattern(regexp = ".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?`~].*", message = "Le mot de passe doit contenir au moins un caractère spécial")
     private String password;
 
     @Override

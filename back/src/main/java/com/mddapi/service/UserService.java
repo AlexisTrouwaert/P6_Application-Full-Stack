@@ -61,7 +61,7 @@ public class UserService {
 
         } catch (BadCredentialsException e) {
             logger.warn("Échec de l'authentification pour l'identifiant {}: Mauvaises identifiants.", request.getIdentifier());
-            return null;
+            throw new RuntimeException("Identifiants incorrecte");
         } catch (Exception e) {
             logger.error("Échec inattendu lors de l'authentification pour l'identifiant {}: {}", request.getIdentifier(), e.getMessage(), e);
             throw new RuntimeException("Échec inattendu de l'authentification.");

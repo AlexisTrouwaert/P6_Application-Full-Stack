@@ -11,9 +11,9 @@ export class CommentsFormService {
   ) { }
 
   createCommentForm(): FormGroup {
-      return this.fb.group({
-        content: new FormControl('', [Validators.required, Validators.minLength(5)]),
-        postId: new FormControl(0, [Validators.required]),
-      })
-    }
+    return this.fb.group({
+      content: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]),
+      postId: new FormControl(0, [Validators.required]),
+    })
+  }
 }
