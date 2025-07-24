@@ -19,4 +19,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Transactional
     @Query("UPDATE Post p SET p.commentCount = p.commentCount + :count WHERE p.id = :postId")
     void incrementCommentCount(@Param("postId") Long postId, @Param("count") int count);
+
+    Page<Post> findAllByTopicId(Pageable pageable, Long topicId);
 }

@@ -12,6 +12,8 @@ import com.mddapi.repository.PostRepository;
 import com.mddapi.repository.TopicRepository;
 import com.mddapi.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +31,8 @@ public class PostService {
     private final TopicRepository topicRepository;
     private final PostMapper postMapper;
     private final CommentRepository commentRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(PostService.class);
 
     public PostService(
             PostRepository postRepository,
@@ -81,6 +85,30 @@ public class PostService {
         );
 
         Page<Post> posts = postRepository.findAll(soartedPageable);
+
+        return posts.map(
+                postMapper::toDto
+        );
+    }
+
+    public Page<PostResponse> getPostsByTopic(Pageable pageable, Long topicId, String sortOrder) {
+
+        logger.info("getPostsByTopic");
+
+        Sort.Direction direction = Sort.Direction.DESC;
+
+        if ("oldest".equalsIgnoreCase(sortOrder)) {
+            direction = Sort.Direction.ASC; // Si 'oldest', tri par plus anciens (ASC)
+        }
+
+        Pageable soartedPageable = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(direction, "createdAt")
+        );
+
+        Page<Post> posts = postRepository.findAllByTopicId(soartedPageable, topicId);
+        logger.info("Found {} posts", posts.getTotalElements());
 
         return posts.map(
                 postMapper::toDto

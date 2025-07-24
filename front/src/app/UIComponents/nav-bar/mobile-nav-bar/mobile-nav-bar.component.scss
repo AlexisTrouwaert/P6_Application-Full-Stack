@@ -19,7 +19,6 @@
     background-color: #ccc;
     display: flex;
     flex-direction: column;
-    align-items: space-between;
     justify-content: space-between;
     padding: 1rem;
     box-sizing: border-box;
@@ -39,6 +38,7 @@
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-end;
+  cursor: pointer;
     & img{
         width: 3rem;
         height: 3rem;

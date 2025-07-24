@@ -1,6 +1,6 @@
 .btn{
-  background-color: #dddddd;
-  color: #1a1a1a;
+  background-color: #5C4B78;
+  color: #dddddd;
   border: none;
   padding: 0.6em 1.2em;
   font-size: 1rem;
@@ -10,11 +10,12 @@
   letter-spacing: 0.1em;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color 0.4s ease, color 0.4s ease-in-out,  box-shadow 0.4s ease;
 
   &:hover {
     background-color: #B0B0B0;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+    color: #1a1a1a;
   }
 
   &:active {
@@ -26,9 +27,9 @@
 
 .tertiary{
   background-color: #C2C2C2;
+  color: #1a1a1a;
     width: auto;
     height: 2rem;
-    padding: 0;
     display: flex;
     align-items: center;
     padding: 0.5rem;
@@ -45,4 +46,16 @@
 
 .arrow{
     width: 2rem;
+}
+
+.destructive{
+  background: none;
+  color: #e03a3a;
+  box-shadow: none;
+  transition: background 0.4s ease-in-out, color 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+}
+
+.destructive:hover{
+  background: #e03a3a;
+  color: #dddddd;
 }

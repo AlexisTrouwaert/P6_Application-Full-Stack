@@ -89,4 +89,17 @@ public class PostController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
+
+    @GetMapping("/topic/{topicId}")
+    ResponseEntity<Page<PostResponse>> getAllPostsByTopicId(
+            @PathVariable Long topicId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "newest") String sortOrder
+    ) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<PostResponse> posts = postService.getPostsByTopic(pageable, topicId, sortOrder);
+        return ResponseEntity.ok(posts);
+    }
 }

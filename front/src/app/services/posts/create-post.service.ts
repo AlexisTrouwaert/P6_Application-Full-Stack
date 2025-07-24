@@ -12,7 +12,7 @@ export class CreatePostService {
 
   private readonly API_URL = 'http://localhost:9000/api/post';
 
-  createPost(post: any) {
+  createPost(post: FormData) {
     return this.http.post(`${this.API_URL}`, post, { withCredentials: true });
   }
 }

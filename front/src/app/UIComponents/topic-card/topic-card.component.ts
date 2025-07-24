@@ -5,6 +5,7 @@ import { TruncatePipe } from '../../pipes/truncate.pipe';
 import { SubscribeService } from '../../services/subscribe/subscribe.service';
 import { UnsubscribeService } from '../../services/subscribe/unsubscribe.service';
 import { Topics } from '../../models/topics';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-topic-card',
@@ -21,7 +22,8 @@ export class TopicCardComponent {
 
   constructor(
     private subscribe: SubscribeService,
-    private unsubscribe: UnsubscribeService
+    private unsubscribe: UnsubscribeService,
+    private router: Router
   ) { }
 
   @Input() topic!: Topics;
@@ -50,6 +52,10 @@ export class TopicCardComponent {
         console.error('Error unsubscribing from topic:', error);
       }
     });
+  }
+
+  redirectToTopicFeed(topicId: number): void {
+    this.router.navigate([`/topic-feed/${topicId}`]);
   }
 
 }

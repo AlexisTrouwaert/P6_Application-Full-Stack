@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Comments } from '../../models/comments';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,12 @@ export class PostCommentService {
 
   private readonly API_URL = 'http://localhost:9000/api/comment';
 
-  sendComment(comment: any) {
+  sendComment(comment: FormData) {
     return this.http.post(`${this.API_URL}`, comment, { withCredentials: true });
   }
 
-  getCommentsByPostId(postId: string): Observable<any> {
-    return this.http.get<any>(`${this.API_URL}/${postId}`, { withCredentials: true });
+  getCommentsByPostId(postId: string): Observable<Comments[]> {
+    return this.http.get<Comments[]>(`${this.API_URL}/${postId}`, { withCredentials: true });
   }
 
   deleteComment(commentId: number) {

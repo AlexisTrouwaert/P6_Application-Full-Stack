@@ -1,9 +1,9 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { ButtonsComponent } from '../buttons/buttons.component';
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { MobileNavBarComponent } from './mobile-nav-bar/mobile-nav-bar.component';
-import { AuthService } from '../../services/auth/auth.service';
+import {Component, HostListener, OnInit} from '@angular/core';
+import {ButtonsComponent} from '../buttons/buttons.component';
+import {CommonModule} from '@angular/common';
+import {Router} from '@angular/router';
+import {MobileNavBarComponent} from './mobile-nav-bar/mobile-nav-bar.component';
+import {AuthService} from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-nav-bar',

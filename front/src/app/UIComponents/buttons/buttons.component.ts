@@ -15,6 +15,6 @@ export class ButtonsComponent {
   @Input() label: string = 'Button';
   @Input() type: 'button' | 'submit' | 'reset' | 'back' = 'button';
   @Input() disabled: boolean = false;
-  @Input() typeButton: 'primary' | 'secondary' | 'tertiary' = 'primary';
+  @Input() typeButton: 'primary' | 'secondary' | 'tertiary' | 'destructive' = 'primary';
 
 }
