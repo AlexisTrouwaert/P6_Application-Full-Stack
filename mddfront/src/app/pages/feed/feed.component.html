@@ -2,7 +2,7 @@
     <div class="top">
         <app-buttons
             label="Créer un article"
-            typeButton="tertiary"
+            typeButton="primary"
             (click)="shownewPost = !shownewPost"
         ></app-buttons>
         <select name="" id="" [(ngModel)]="sortOrder" (change)="reloadAllPosts()">
@@ -15,7 +15,8 @@
             [post]="post"
             [myId]="myId"
             (postDeleted)="reloadAllPosts()"
-        ></app-post-card>
+        >
+        </app-post-card>
         <div class="sentinel" #scrollSentinel></div>
     </div>
 </div>

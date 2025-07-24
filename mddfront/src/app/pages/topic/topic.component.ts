@@ -30,7 +30,7 @@ export class TopicComponent implements OnInit {
 
   loadTopics(): void {
     this.getAllTopicsService.getAllTopics().subscribe({
-      next: (response: any) => {
+      next: (response: Topics[]) => {
         console.log('Topics loaded:', response);
         this.topics = response;
       },

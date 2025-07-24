@@ -9,6 +9,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PostCommentService } from '../../services/comments/post-comment.service';
 import { ButtonsComponent } from "../../UIComponents/buttons/buttons.component";
 import { UserInfo } from '../../models/user-info';
+import { Comments } from '../../models/comments';
 
 @Component({
   selector: 'app-post-detail',
@@ -39,7 +40,7 @@ export class PostDetailComponent implements OnInit {
 
   postId!: number;
   post! : Posts;
-  comments!: any;
+  comments!: Comments[];
 
   showError: boolean = false;
   errorMessage: string = "";

@@ -1,0 +1,52 @@
+.all{
+  padding: 6rem 1rem 1rem 1rem;
+  box-sizing: border-box;
+}
+
+.sentinel{
+  width: 100vw;
+  height: 1px;
+}
+
+.top{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  & select {
+    background: none;
+    border-style: none;
+    border: none;
+  }
+}
+
+.content{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+
+  & app-post-card {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  @media (min-width: 769px) {
+    app-post-card {
+      flex: 0 0 calc(50% - 0.75rem);
+    }
+  }
+}
+
+select{
+  outline: none;
+  background-color: #dddddd;
+  color: #1a1a1a;
+  border: none;
+  padding: 0 1.2em;
+  font-size: 1rem;
+  border-radius: 4px;
+  letter-spacing: 0.1em;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+}

@@ -1,0 +1,22 @@
+<div class="all">
+  <div class="top">
+    <app-buttons
+      label="Créer un article"
+      typeButton="primary"
+      (click)="shownewPost = !shownewPost"
+    ></app-buttons>
+    <select name="" id="" [(ngModel)]="sortOrder" (change)="reloadAllPosts()">
+      <option value="newest">Les plus récents</option>
+      <option value="oldest">Les plus anciens</option>
+    </select>
+  </div>
+  <div class="content">
+    <app-post-card *ngFor="let post of posts" (click)="redirectToDetails(post.id)"
+                   [post]="post"
+                   [myId]="myId"
+                   (postDeleted)="reloadAllPosts()"
+    >
+    </app-post-card>
+    <div class="sentinel" #scrollSentinel></div>
+  </div>
+</div>

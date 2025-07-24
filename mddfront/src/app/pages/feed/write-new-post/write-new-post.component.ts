@@ -5,6 +5,7 @@ import { CreatePostFormService } from '../../../services/form/posts/create-post-
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CreatePostService } from '../../../services/posts/create-post.service';
+import { Topics } from '../../../models/topics';
 
 @Component({
   selector: 'app-write-new-post',
@@ -34,7 +35,7 @@ export class WriteNewPostComponent {
 
   @Output() closeWritePost = new EventEmitter<void>();
 
-  @Input() topics!: any[];
+  @Input() topics!: Topics[];
   
   onBackgroundClick(): void {
     this.closeWritePost.emit();

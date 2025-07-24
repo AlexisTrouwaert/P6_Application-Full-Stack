@@ -1,42 +1,36 @@
-import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ButtonsComponent } from '../../UIComponents/buttons/buttons.component';
-import { GetAllPostsService } from '../../services/posts/get-all-posts.service';
-import { GetAllTopicService } from '../../services/topic/get-all-topic.service';
-import { Posts } from '../../models/posts';
-import { PostCardComponent } from '../../UIComponents/post-card/post-card.component';
-import { Subject, takeUntil } from 'rxjs';
-import { WriteNewPostComponent } from './write-new-post/write-new-post.component';
-import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { Topics } from '../../models/topics';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ButtonsComponent} from "../../UIComponents/buttons/buttons.component";
+import {FormsModule} from "@angular/forms";
+import {NgForOf} from "@angular/common";
+import {PostCardComponent} from "../../UIComponents/post-card/post-card.component";
+import {ActivatedRoute, Router} from "@angular/router";
+import {GetPostByTopicService} from "../../services/posts/get-post-by-topic.service";
+import {Posts} from "../../models/posts";
+import {Topics} from "../../models/topics";
+import {Subject, takeUntil} from "rxjs";
+import {GetAllTopicService} from "../../services/topic/get-all-topic.service";
 
 @Component({
-  selector: 'app-feed',
+  selector: 'app-topic-feed',
   standalone: true,
   imports: [
-    CommonModule,
     ButtonsComponent,
-    PostCardComponent,
-    WriteNewPostComponent,
-    FormsModule
+    FormsModule,
+    NgForOf,
+    PostCardComponent
   ],
-  templateUrl: './feed.component.html',
-  styleUrl: './feed.component.scss'
+  templateUrl: './topic-feed.component.html',
+  styleUrl: './topic-feed.component.scss'
 })
-export class FeedComponent implements OnInit {
+export class TopicFeedComponent implements OnInit {
 
   constructor(
-    private getAllPostsService: GetAllPostsService,
+    private router : Router,
+    private getPostsByTopic: GetPostByTopicService,
     private getAllTopicsService: GetAllTopicService,
-    private router: Router
-  ) { }
-
-  @ViewChild('scrollSentinel', { static: false }) scrollSentinel!: ElementRef;
-
-  private destroy$ = new Subject<void>();
-  private scrollObserver!: IntersectionObserver;
-
+    private route: ActivatedRoute
+  ) {
+  }
 
   page = 0;
   size = 10;
@@ -44,12 +38,21 @@ export class FeedComponent implements OnInit {
   loading = false;
   posts: Posts[] = [];
   topics: Topics[] = [];
+  topicId: string | null = null;
   myId!: number;
-  sortOrder: string = 'newest';
 
+  sortOrder: string = 'newest';
   shownewPost: boolean = false;
 
+  @ViewChild('scrollSentinel', { static: false }) scrollSentinel!: ElementRef;
+
+  private destroy$ = new Subject<void>();
+  private scrollObserver!: IntersectionObserver;
+
   ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.topicId = params.get('id');
+    });
     this.posts = [];
     this.page = 0;
     this.loading = false;
@@ -88,7 +91,7 @@ export class FeedComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.getAllPostsService.getAllPosts(this.page, this.size, this.sortOrder)
+    this.getPostsByTopic.getAllPostsbyTopic(this.page, this.size, this.sortOrder, Number(this.topicId))
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response: any) => {
@@ -106,7 +109,6 @@ export class FeedComponent implements OnInit {
           this.loading = false;
         }
       });
-
   }
 
   loadTopics(): void {
@@ -140,5 +142,4 @@ export class FeedComponent implements OnInit {
   redirectToDetails(postId: number): void {
     this.router.navigate(['/details', postId]);
   }
-
 }
